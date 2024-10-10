@@ -6,4 +6,6 @@ public:
 	Stage();
 	~Stage();
 	void Draw() override;
+
+	int hImage;
 };
