@@ -3,6 +3,10 @@
 struct VECTOR2 { // ç\ë¢ëÃ
 	float x; // ç¿ïW
 	float y;
+	VECTOR2() { x = 0; y = 0; }
+	VECTOR2(float _x, float _y) {
+		x = _x; y = _y;
+	}
 };
 
 float VSize(VECTOR2 v);

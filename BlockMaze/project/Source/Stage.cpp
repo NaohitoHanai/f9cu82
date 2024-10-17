@@ -10,9 +10,9 @@ int map[HEIGHT][WIDTH] = {
 	{ 1,0,0,0,0,2,0,1,1,1,1,1, },
 	{ 1,0,1,1,0,2,0,1,0,0,0,0, },
 	{ 1,0,1,1,0,0,0,1,0,0,0,0, },
-	{ 1,0,1,1,0,1,0,1,0,0,0,0, },
-	{ 1,0,0,0,0,0,9,1,0,0,0,0, },
-	{ 1,1,1,1,1,1,1,1,0,0,0,0, },
+	{ 1,0,1,1,0,1,0,1,1,0,0,0, },
+	{ 1,0,0,0,0,0,9,0,1,0,0,0, },
+	{ 1,1,1,1,1,1,1,1,1,0,0,0, },
 };
 
 Stage::Stage()
@@ -22,8 +22,8 @@ Stage::Stage()
 		for (int i = 0; i < WIDTH; i++) {
 			if (map[j][i] == 9) {
 				Player* p = Instantiate<Player>();
-				p->position.x = 100;
-				p->position.y = 200;
+				p->position.x = i * 40 + 100;
+				p->position.y = j * 40 + 100;
 			}
 		}
 	}
@@ -47,4 +47,48 @@ void Stage::Draw()
 			}
 		}
 	}
+}
+
+int Stage::IsWallRight(VECTOR2 pos)
+{
+	int i = (pos.x - 100) / 40;
+	int j = (pos.y - 100) / 40;
+	if (map[j][i] == 1) {
+		int push = ((int)pos.x - 100) % 40 + 1;
+		return push;
+	}
+	return 0;
+}
+
+int Stage::IsWallDown(VECTOR2 pos)
+{
+	int i = (pos.x - 100) / 40;
+	int j = (pos.y - 100) / 40;
+	if (map[j][i] == 1) {
+		int push = ((int)pos.y - 100) % 40 + 1;
+		return push;
+	}
+	return 0;
+}
+
+int Stage::IsWallLeft(VECTOR2 pos)
+{
+	int i = (pos.x - 100) / 40;
+	int j = (pos.y - 100) / 40;
+	if (map[j][i] == 1) {
+		int push = 40 - ((int)pos.x - 100) % 40;
+		return push;
+	}
+	return 0;
+}
+
+int Stage::IsWallUp(VECTOR2 pos)
+{
+	int i = (pos.x - 100) / 40;
+	int j = (pos.y - 100) / 40;
+	if (map[j][i] == 1) {
+		int push = 40 - ((int)pos.y - 100) % 40;
+		return push;
+	}
+	return 0;
 }
