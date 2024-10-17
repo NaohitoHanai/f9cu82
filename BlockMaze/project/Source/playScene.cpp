@@ -3,12 +3,11 @@
 #include "DebugScreen.h"
 #include <DxLib.h>
 #include "Stage.h"
-#include "Player.h"
 
 PlayScene::PlayScene()
 {
-	Instantiate<Stage>();
-	Instantiate<Player>();
+	Stage* s = Instantiate<Stage>();
+	SetDrawOrder(s, 10);
 }
 
 PlayScene::~PlayScene()
