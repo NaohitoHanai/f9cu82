@@ -1,5 +1,6 @@
 #include "Stage.h"
 #include "Player.h"
+#include "Coin.h"
 
 const int WIDTH = 12;
 const int HEIGHT = 8;
@@ -25,6 +26,11 @@ Stage::Stage()
 				p->position.x = i * 40 + 100;
 				p->position.y = j * 40 + 100;
 			}
+			if (map[j][i] == 2) {
+				Coin* c = Instantiate<Coin>();
+				c->position.x = i * 40 + 100;
+				c->position.y = j * 40 + 100;
+			}
 		}
 	}
 }
@@ -42,9 +48,9 @@ void Stage::Draw()
 			if (map[j][i] == 1) {
 				DrawRectGraph(x, y, 0, 40, 40, 40, hImage, TRUE);
 			}
-			if (map[j][i] == 2) {
-				DrawRectGraph(x, y, 120, 0, 40, 40, hImage, TRUE);
-			}
+			//if (map[j][i] == 2) {
+			//	DrawRectGraph(x, y, 120, 0, 40, 40, hImage, TRUE);
+			//}
 		}
 	}
 }
