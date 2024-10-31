@@ -44,7 +44,9 @@
     <ClCompile Include="Source\Player.cpp">
       <Filter>PlayScene</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Coin.cpp" />
+    <ClCompile Include="Source\Coin.cpp">
+      <Filter>PlayScene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\config.h" />
@@ -98,6 +100,9 @@
       <Filter>PlayScene</Filter>
     </ClInclude>
     <ClInclude Include="Source\Coin.h">
+      <Filter>PlayScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\stage1.h">
       <Filter>PlayScene</Filter>
     </ClInclude>
   </ItemGroup>
