@@ -11,5 +11,8 @@ public:
 	int IsWallDown(VECTOR2 pos);
 	int IsWallLeft(VECTOR2 pos);
 	int IsWallUp(VECTOR2 pos);
+	bool IsGoal(VECTOR2 pos);
 	int hImage;
+
+	int scroll;
 };

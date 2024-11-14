@@ -147,6 +147,7 @@
     <ClInclude Include="Source\component.h" />
     <ClInclude Include="Source\config.h" />
     <ClInclude Include="Source\debugScreen.h" />
+    <ClInclude Include="Source\GoalText.h" />
     <ClInclude Include="Source\Player.h" />
     <ClInclude Include="Source\playScene.h" />
     <ClInclude Include="Source\sceneFactory.h" />
@@ -166,6 +167,7 @@
     <ClCompile Include="Source\bootScene.cpp" />
     <ClCompile Include="Source\Coin.cpp" />
     <ClCompile Include="Source\debugScreen.cpp" />
+    <ClCompile Include="Source\GoalText.cpp" />
     <ClCompile Include="Source\Player.cpp" />
     <ClCompile Include="Source\playScene.cpp" />
     <ClCompile Include="Source\sceneFactory.cpp" />

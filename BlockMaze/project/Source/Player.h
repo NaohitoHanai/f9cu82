@@ -14,4 +14,6 @@ public:
 	float velocity;
 	bool prevJumpKey; // 前のジャンプキー
 	bool onGround; // 地面にいる
+
+	bool goaled; // ゴールしました
 };
