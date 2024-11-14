@@ -11,4 +11,7 @@ public:
 
 	int hImage;
 	VECTOR2 position;
+	float velocity;
+	bool prevJumpKey; // 前のジャンプキー
+	bool onGround; // 地面にいる
 };

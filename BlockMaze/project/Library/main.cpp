@@ -39,8 +39,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		if (ProcessMessage() == -1 || CheckHitKey(KEY_INPUT_ESCAPE) != 0 )
 			break;
 		ScreenFlip();
-
-
 	}
 	AppRelease();
 	DxLib_End();				// ＤＸライブラリ使用の終了処理
