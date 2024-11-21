@@ -8,4 +8,6 @@ public:
 	~GoalText();
 	void Update() override;
 	void Draw() override;
+
+	float timer;
 };
