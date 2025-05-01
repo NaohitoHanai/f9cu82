@@ -1,7 +1,11 @@
 #include "TitleScene.h"
+#include "Axis.h"
+#include "Model.h"
 
 TitleScene::TitleScene()
 {
+	new Axis();
+	new Model();
 }
 
 TitleScene::~TitleScene()
