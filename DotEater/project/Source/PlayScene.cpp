@@ -1,7 +1,13 @@
 #include "PlayScene.h"
+#include "Axis.h"
+#include "Camera.h"
+#include "Stage.h"
 
 PlayScene::PlayScene()
 {
+	new Axis();
+	new Camera();
+	new Stage();
 }
 
 PlayScene::~PlayScene()

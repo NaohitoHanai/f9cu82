@@ -3,8 +3,8 @@
 
 Camera::Camera()
 {
-	rotation = VGet(0,0,0);
-	distance = 300.0f;
+	rotation = VGet(80*DegToRad,0,0);
+	distance = 500.0f;
 }
 
 Camera::~Camera()
