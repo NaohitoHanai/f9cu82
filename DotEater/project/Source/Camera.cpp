@@ -1,0 +1,22 @@
+#include "Camera.h"
+#include "../ImGui/imgui.h"
+
+Camera::Camera()
+{
+	rotation = VGet(0,0,0);
+	distance = 300.0f;
+}
+
+Camera::~Camera()
+{
+}
+
+void Camera::Update()
+{
+}
+
+void Camera::Draw()
+{
+	VECTOR pos = VGet(0,0,-distance) * MGetRotX(rotation.x) * MGetRotY(rotation.y);
+	SetCameraPositionAndTarget_UpVecY(pos, VGet(0, 0, 0));
+}

@@ -155,7 +155,6 @@
     <ClInclude Include="Source\Axis.h" />
     <ClInclude Include="Source\BootScene.h" />
     <ClInclude Include="Source\Camera.h" />
-    <ClInclude Include="Source\Model.h" />
     <ClInclude Include="Source\Object3D.h" />
     <ClInclude Include="Source\Screen.h" />
     <ClInclude Include="Source\PlayScene.h" />
@@ -179,7 +178,6 @@
     <ClCompile Include="Source\Axis.cpp" />
     <ClCompile Include="Source\BootScene.cpp" />
     <ClCompile Include="Source\Camera.cpp" />
-    <ClCompile Include="Source\Model.cpp" />
     <ClCompile Include="Source\Object3D.cpp" />
     <ClCompile Include="Source\PlayScene.cpp" />
     <ClCompile Include="Source\SceneFactory.cpp" />

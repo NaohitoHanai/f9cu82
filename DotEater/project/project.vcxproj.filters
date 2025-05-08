@@ -50,17 +50,14 @@
     <ClCompile Include="Library\Time.cpp">
       <Filter>Library</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Axis.cpp">
-      <Filter>TitleScene</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Model.cpp">
-      <Filter>TitleScene</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Camera.cpp">
-      <Filter>TitleScene</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Object3D.cpp">
       <Filter>TitleScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Axis.cpp">
+      <Filter>PlayScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Camera.cpp">
+      <Filter>PlayScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -126,17 +123,14 @@
     <ClInclude Include="Library\myDxLib.h">
       <Filter>Library</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Axis.h">
-      <Filter>TitleScene</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Model.h">
-      <Filter>TitleScene</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Camera.h">
-      <Filter>TitleScene</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Object3D.h">
       <Filter>TitleScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Axis.h">
+      <Filter>PlayScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Camera.h">
+      <Filter>PlayScene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

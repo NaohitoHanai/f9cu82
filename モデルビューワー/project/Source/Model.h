@@ -1,14 +1,10 @@
 #pragma once
-#include "../Library/GameObject.h"
+#include "Object3D.h"
 
-class Model : public GameObject
+class Model : public Object3D
 {
 public:
 	Model();
 	~Model();
 	void Update() override;
-	void Draw() override;
-private:
-	int hModel;
-	VECTOR rotation;
 };

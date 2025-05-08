@@ -1,13 +1,7 @@
 #include "TitleScene.h"
-#include "Axis.h"
-#include "Model.h"
-#include "Camera.h"
 
 TitleScene::TitleScene()
 {
-	new Axis();
-	new Model();
-	new Camera();
 }
 
 TitleScene::~TitleScene()
