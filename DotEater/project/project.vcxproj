@@ -156,6 +156,8 @@
     <ClInclude Include="Source\Axis.h" />
     <ClInclude Include="Source\BootScene.h" />
     <ClInclude Include="Source\Camera.h" />
+    <ClInclude Include="Source\Coin.h" />
+    <ClInclude Include="Source\CsvReader.h" />
     <ClInclude Include="Source\Object3D.h" />
     <ClInclude Include="Source\Player.h" />
     <ClInclude Include="Source\Screen.h" />
@@ -182,6 +184,8 @@
     <ClCompile Include="Source\Axis.cpp" />
     <ClCompile Include="Source\BootScene.cpp" />
     <ClCompile Include="Source\Camera.cpp" />
+    <ClCompile Include="Source\Coin.cpp" />
+    <ClCompile Include="Source\CsvReader.cpp" />
     <ClCompile Include="Source\Object3D.cpp" />
     <ClCompile Include="Source\Player.cpp" />
     <ClCompile Include="Source\PlayScene.cpp" />

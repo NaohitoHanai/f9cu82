@@ -68,6 +68,12 @@
     <ClCompile Include="Source\Animator.cpp">
       <Filter>PlayScene</Filter>
     </ClCompile>
+    <ClCompile Include="Source\CsvReader.cpp">
+      <Filter>PlayScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Coin.cpp">
+      <Filter>PlayScene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Screen.h" />
@@ -148,6 +154,12 @@
       <Filter>PlayScene</Filter>
     </ClInclude>
     <ClInclude Include="Source\Animator.h">
+      <Filter>PlayScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CsvReader.h">
+      <Filter>PlayScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Coin.h">
       <Filter>PlayScene</Filter>
     </ClInclude>
   </ItemGroup>

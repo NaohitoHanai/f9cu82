@@ -8,6 +8,8 @@ public:
 	virtual ~Object3D();
 	virtual void Update() override;
 	virtual void Draw() override;
+	VECTOR GetPosition() { return position; }
+	VECTOR GetRotation() { return rotation; }
 protected:
 	int hModel;
 	VECTOR position;
