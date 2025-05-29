@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "PlayScene.h"
 
 Player::Player()
 {
@@ -28,6 +29,10 @@ Player::~Player()
 void Player::Update()
 {
 	anim->Update();
+
+	if ( !GetScene<PlayScene>()->CanPlay())
+		return;
+
 	if (CheckHitKey(KEY_INPUT_D))
 	{
 		rotation.y += 3.0f * DegToRad;

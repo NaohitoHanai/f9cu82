@@ -11,4 +11,13 @@ public:
 	~PlayScene();
 	void Update() override;
 	void Draw() override;
+	bool CanPlay();
+private:
+	enum State { // ƒQ[ƒ€ó‘Ô
+		S_READY = 0,
+		S_PLAY,
+		S_TIMEUP,
+		S_CLEAR,
+	};
+	State state;
 };
