@@ -147,26 +147,14 @@
     <ClInclude Include="ImGui\imstb_truetype.h" />
     <ClInclude Include="Library\App.h" />
     <ClInclude Include="Library\GameObject.h" />
-    <ClInclude Include="Library\myDxLib.h" />
     <ClInclude Include="Library\ObjectManager.h" />
     <ClInclude Include="Library\SceneBase.h" />
     <ClInclude Include="Library\SceneManager.h" />
     <ClInclude Include="Library\Time.h" />
-    <ClInclude Include="Source\Animator.h" />
-    <ClInclude Include="Source\Axis.h" />
     <ClInclude Include="Source\BootScene.h" />
-    <ClInclude Include="Source\Camera.h" />
-    <ClInclude Include="Source\Coin.h" />
-    <ClInclude Include="Source\CsvReader.h" />
-    <ClInclude Include="Source\Object3D.h" />
-    <ClInclude Include="Source\Player.h" />
-    <ClInclude Include="Source\PlayTime.h" />
-    <ClInclude Include="Source\ReadyGo.h" />
-    <ClInclude Include="Source\Record.h" />
     <ClInclude Include="Source\Screen.h" />
     <ClInclude Include="Source\PlayScene.h" />
     <ClInclude Include="Source\SceneFactory.h" />
-    <ClInclude Include="Source\Stage.h" />
     <ClInclude Include="Source\TitleScene.h" />
   </ItemGroup>
   <ItemGroup>
@@ -183,19 +171,9 @@
     <ClCompile Include="Library\ObjectManager.cpp" />
     <ClCompile Include="Library\SceneManager.cpp" />
     <ClCompile Include="Library\Time.cpp" />
-    <ClCompile Include="Source\Animator.cpp" />
-    <ClCompile Include="Source\Axis.cpp" />
     <ClCompile Include="Source\BootScene.cpp" />
-    <ClCompile Include="Source\Camera.cpp" />
-    <ClCompile Include="Source\Coin.cpp" />
-    <ClCompile Include="Source\CsvReader.cpp" />
-    <ClCompile Include="Source\Object3D.cpp" />
-    <ClCompile Include="Source\Player.cpp" />
     <ClCompile Include="Source\PlayScene.cpp" />
-    <ClCompile Include="Source\PlayTime.cpp" />
-    <ClCompile Include="Source\ReadyGo.cpp" />
     <ClCompile Include="Source\SceneFactory.cpp" />
-    <ClCompile Include="Source\Stage.cpp" />
     <ClCompile Include="Source\TitleScene.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
