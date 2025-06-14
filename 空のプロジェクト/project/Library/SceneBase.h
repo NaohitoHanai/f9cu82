@@ -6,7 +6,6 @@
 /// <author>N.Hanai</author>
 
 #include <list>
-#include "SceneManager.h"
 #include "GameObject.h"
 
 class SceneBase

@@ -1,8 +1,11 @@
 #include "PlayScene.h"
 #include <DxLib.h>
+#include "Ball.h"
 
 PlayScene::PlayScene()
 {
+	new Ball(1, VECTOR3(100, 200, 0));
+	new Ball(3, VECTOR3(300, 300, 0));
 }
 
 PlayScene::~PlayScene()

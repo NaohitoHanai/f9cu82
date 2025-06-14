@@ -20,14 +20,15 @@ void AppUpdate()
 void AppDraw()
 {
 	Time::Refresh();
-	SceneManager::Draw();
 	ObjectManager::Draw();
+	SceneManager::Draw();
 }
 
 void AppRelease()
 {
-	ObjectManager::Release();
+	Time::Release();
 	SceneManager::Release();
+	ObjectManager::Release();
 }
 
 bool AppIsExit()

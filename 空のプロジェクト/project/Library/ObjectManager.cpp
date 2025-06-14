@@ -20,35 +20,61 @@ void ObjectManager::Init()
 
 void ObjectManager::Update()
 {
-	std::list<GameObject*> updateObjects = *objects;
-	for (GameObject* obj : updateObjects) {
-		running = obj;
-		obj->Update();
-		running = nullptr;
-		if (obj->DestroyRequested()) {
+	for (auto itr = objects->begin(); itr != objects->end(); itr++)
+	{
+		GameObject* obj = *itr;
+		if (obj == nullptr)
+			continue;
+		if (not obj->DestroyRequested())
+		{
+			running = obj;
+			obj->Update();
+			running = nullptr;
+		}
+		if (obj->DestroyRequested())
+		{
 			delete obj;
+			*itr = nullptr;
+		}
+	}
+	for (auto itr = objects->begin(); itr != objects->end();)
+	{
+		if (*itr == nullptr)
+		{
+			itr = objects->erase(itr);
+		}
+		else
+		{
+			itr++;
 		}
 	}
 }
 
 void ObjectManager::Draw()
 {
-	if (needSortDraw) {
+	if (needSortDraw)
+	{
 		objects->sort([](GameObject* a, GameObject* b) {return a->GetDrawOrder() > b->GetDrawOrder(); });
 		needSortDraw = false;
 	}
-	for (GameObject* node : *objects) {
-		running = node;
-		node->Draw();
-		running = nullptr;
+	for (GameObject* obj : *objects)
+	{
+		if (obj == nullptr || obj->DestroyRequested())
+			continue;
+		obj->Draw();
 	}
 }
 
 void ObjectManager::Release()
 {
-	while (objects->size() > 0) {
+	while (objects->size() > 0)
+	{
 		auto itr = objects->begin();
-		delete* itr;
+		if (*itr != nullptr)
+		{
+			delete *itr;
+		}
+		objects->erase(itr);
 	}
 	objects->clear();
 	delete objects;
@@ -68,12 +94,13 @@ void ObjectManager::SortByDrawOrder()
 
 void ObjectManager::Pop(GameObject* obj)
 {
-	for (auto itr = objects->begin(); itr != objects->end();) {
-		if (*itr == obj) {
-			itr = objects->erase(itr);
-		}
-		else {
-			itr++;
+	assert(running != obj);
+
+	for (auto itr = objects->begin(); itr != objects->end(); itr++)
+	{
+		if (*itr == obj)
+		{
+			*itr = nullptr;
 		}
 	}
 }
@@ -82,10 +109,23 @@ void ObjectManager::DeleteAllGameObject()
 {
 	assert(running == nullptr);
 
-	std::list<GameObject*> deleteObjects = *objects;
-	for (GameObject* obj : deleteObjects) {
-		if (obj->IsDontDestroy() == false) {
+	for (auto itr = objects->begin(); itr != objects->end(); itr++)
+	{
+		GameObject* obj = *itr;
+		if (not obj->IsDontDestroy())
+		{
 			delete obj;
+			*itr = nullptr;
+		}
+	}
+	for (auto itr = objects->begin(); itr != objects->end();)
+	{
+		if (*itr == nullptr) {
+			itr = objects->erase(itr);
+		}
+		else
+		{
+			itr++;
 		}
 	}
 }

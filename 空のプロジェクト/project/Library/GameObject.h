@@ -4,12 +4,16 @@
 /// </summary>
 /// <author>N.Hanai</author>
 
-#include <DxLib.h>
+#include "myDxLib.h"
 #include <string>
-#include "SceneBase.h"
 #include "ObjectManager.h"
+#include "SceneManager.h"
 #include "Time.h"
 
+/// <summary>
+/// これを継承したクラスのインスタンスは、ObjectManagerで管理され、
+/// Update()とDraw()が自動で呼ばれます
+/// </summary>
 class GameObject
 {
 public:
@@ -32,14 +36,24 @@ public:
 	/// </summary>
 	void DestroyMe() { destroy = true; }
 
-	bool DestroyRequested() const { return destroy; }
+	/// <summary>
+	/// DestroyMeされているか調べる
+	/// この関数はObjectManagerが使っています。
+	/// </summary>
+	/// <returns>DestroyMeされているとtrue</returns>
+	inline bool DestroyRequested() const { return destroy; }
 
 	/// <summary>
 	/// シーンチェンジするときに、削除されなくする
 	/// </summary>
 	/// <param name="sw">書かなければtrue、falseにすると削除される</param>
-	void StayOnSceneChange(bool sw = true) { dontDestroy = sw; }
+	void DontDestroyOnSceneChange(bool sw = true) { dontDestroy = sw; }
 
+	/// <summary>
+	/// DontDestroyが設定されているか調べる
+	/// この関数はObjectManagerが使っています
+	/// </summary>
+	/// <returns>DontDetroyになっていればtrue</returns>
 	bool IsDontDestroy() const { return dontDestroy; }
 
 	/// <summary>
@@ -49,12 +63,17 @@ public:
 	/// 何も指定しなければ０です
 	/// </summary>
 	/// <param name="odr">描画順位</param>
-	void SetDrawOrder(int order) {
+	void SetDrawOrder(int order)
+	{
 		drawOrder = order;
 		ObjectManager::SortByDrawOrder();
 	}
 
-	inline int GetDrawOrder() const {	return drawOrder; }
+	/// <summary>
+	/// 描画の優先順位を取得します
+	/// </summary>
+	/// <returns>描画優先順位</returns>
+	inline int GetDrawOrder() const { return drawOrder; }
 
 	/// <summary>
 	/// タグをつける
@@ -76,6 +95,8 @@ private:
 	int drawOrder;
 };
 
+// 旧バージョンとの互換性のため残しています。
+// 削除予定のため、使わないでください。
 template <class C>
 C* Instantiate()
 {

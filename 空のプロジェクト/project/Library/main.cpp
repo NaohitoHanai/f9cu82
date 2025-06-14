@@ -5,11 +5,13 @@
 /// <author>N.Hanai</author>
 /// 
 #define _CRTDBG_MAP_ALLOC
+#ifdef _CRTDBG_MAP_ALLOC
 #include <crtdbg.h>
 #ifdef _DEBUG
 #define DBG_NEW new(_NORMAL_BLOCK, __FILE__, __LINE__);
 #else
 #define DBG_NEW new
+#endif
 #endif
 
 #define IMGUI 1
@@ -18,7 +20,11 @@
 #include "../Source/Screen.h"
 #include "../ImGui/imgui_impl_dxlib.hpp"
 
-#define CoGVersion (4.1)
+#define CoGVersion "4.5F"
+
+const char* Version() {
+	return CoGVersion;
+}
 
 // プログラムは WinMain から始まります
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
@@ -55,8 +61,40 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	io.Fonts->AddFontFromFileTTF(u8"c:\\Windows\\Fonts\\meiryo.ttc", 18.0f, nullptr, io.Fonts->GetGlyphRangesJapanese());	ImGui_ImplDXlib_Init();
 #endif
 	AppInit();
-
+#ifdef FIX_FRAME_RATE
+	float refreshTime;
+	float freq;
+	LONGLONG lastTime;
+	if (Screen::FRAME_RATE <= 0.0f) {
+		HDC hdc = GetDC(GetMainWindowHandle());	// デバイスコンテキストの取得
+		float refreshRate = (float)GetDeviceCaps(hdc, VREFRESH);	// リフレッシュレートの取得
+		refreshTime = 1.0f / refreshRate;
+		ReleaseDC(GetMainWindowHandle(), hdc);	// デバイスコンテキストの解放
+	} else {
+		int d = Screen::FRAME_RATE;
+		refreshTime = 1.0f / d;
+	}
+	{
+		LARGE_INTEGER freqL;
+		QueryPerformanceFrequency(&freqL);
+		freq = freqL.QuadPart;
+		LARGE_INTEGER current;
+		QueryPerformanceCounter(&current);
+		lastTime = current.QuadPart;
+	}
+#endif
 	while (true) {
+#ifdef FIX_FRAME_RATE
+		while(true) {
+			LARGE_INTEGER current;
+			QueryPerformanceCounter(&current);
+			float dt = static_cast<float>(current.QuadPart - lastTime) / freq;
+			if (dt >= refreshTime) {
+				lastTime = current.QuadPart;
+				break;
+			}
+		}
+#endif
 #if IMGUI
 		ImGui_ImplDXlib_NewFrame();
 		ImGui::NewFrame();
@@ -64,7 +102,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		AppUpdate();
 
-		if (ProcessMessage() == -1 || AppIsExit()) {
+		if (ProcessMessage() == -1 || AppIsExit())
+		{
 			break;
 		}
 		ScreenFlip();
@@ -90,9 +129,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	ImGui::DestroyContext();
 #endif
 	DxLib_End();				// ＤＸライブラリ使用の終了処理
+#ifdef _CRTDBG_MAP_ALLOC
 #ifdef _DEBUG
 	_CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_DEBUG);
 	_CrtDumpMemoryLeaks();
+#endif
 #endif
 	return 0;				// ソフトの終了 
 }
