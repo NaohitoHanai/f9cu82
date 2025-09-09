@@ -11,6 +11,7 @@ public:
 	Player(const VECTOR3& pos, float rot);
 	~Player();
 	void Update() override;
+	void Draw() override;
 private:
 	enum AnimID {
 		A_NEUTRAL = 0,

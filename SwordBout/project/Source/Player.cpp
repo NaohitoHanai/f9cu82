@@ -53,10 +53,53 @@ Player::~Player()
 		animator = nullptr;
 	}
 }
+VECTOR3 moveVec;
 
 void Player::Update()
 {
 	animator->Update();
 
+	// 入力をベクトルに直す
+	VECTOR3 inputVec = VECTOR3(0,0,0);
+	if (CheckHitKey(KEY_INPUT_W)) {
+		inputVec += VECTOR3(0,0,1);
+	}
+	if (CheckHitKey(KEY_INPUT_S)) {
+		inputVec += VECTOR3(0, 0, -1);
+	}
+	if (CheckHitKey(KEY_INPUT_D)) {
+		inputVec += VECTOR3(1, 0, 0);
+	}
+	if (CheckHitKey(KEY_INPUT_A)) {
+		inputVec += VECTOR3(-1, 0, 0);
+	}
+	inputVec = inputVec.Normalize();
+	// 進みたいベクトルを求める（実際に進むベクトル）
+	//　　　カメラの回転は、camera->GetTransform().rotationで手に入る
+	if (inputVec.Size() > 0) {
+		moveVec = inputVec * MGetRotY(camera->GetTransform().rotation.y);
+		VECTOR3 front = VECTOR3(0, 0, 1) * MGetRotY(transform.rotation.y);
+		VECTOR3 right = VECTOR3(1, 0, 0) * MGetRotY(transform.rotation.y);
+		float moveCos = VDot(moveVec, front);
+		if (moveCos >= cosf(30.0f * DegToRad)) { // 正面付近
+			transform.position += moveVec * 5.0f;
+			transform.rotation.y = atan2f(moveVec.x, moveVec.z);
+		} else if (右ベクトルとの内積が>=0) {
+			transform.rotation.y += 30.0f * DegToRad;
+		} else {
+			// 左回り
+		}
+	}
+
+	// 回転を合わせる（１フレームで60度回る）：角度が合わなければ進まない
+	// 角度があっていれば、その向きに進む
+
 	camera->SetPlayerPosition(transform.position);
+}
+
+void Player::Draw()
+{	
+	Object3D::Draw(); // キャラの表示
+	DrawLine3D(transform.position + moveVec*100, transform.position,
+		GetColor(255,0,0));
 }

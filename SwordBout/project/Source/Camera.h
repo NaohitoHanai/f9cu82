@@ -11,4 +11,5 @@ public:
 	void SetPlayerPosition(const VECTOR& pos);
 private:
 	VECTOR lookPosition;
+	int prevMouseX, prevMouseY;
 };

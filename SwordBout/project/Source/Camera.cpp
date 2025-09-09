@@ -7,6 +7,7 @@ namespace {
 
 Camera::Camera()
 {
+	GetMousePoint(&prevMouseX, &prevMouseY);
 }
 
 Camera::~Camera()
@@ -15,9 +16,40 @@ Camera::~Camera()
 
 void Camera::Update()
 {
-	SetCameraPositionAndTarget_UpVecY(
-			lookPosition + VECTOR3(0, 300.0f, -400.0f),
-			lookPosition + VECTOR3(0, 200.0f, 0));
+	if (CheckHitKey(KEY_INPUT_RIGHT)) { //→キー
+		transform.rotation.y += 3.0f * DegToRad;
+	}
+	if (CheckHitKey(KEY_INPUT_LEFT)) { //→キー
+		transform.rotation.y -= 3.0f * DegToRad;
+	}
+	if (CheckHitKey(KEY_INPUT_UP)) { //→キー
+		transform.rotation.x += 2.0f * DegToRad;
+	}
+	if (CheckHitKey(KEY_INPUT_DOWN)) { //→キー
+		transform.rotation.x -= 2.0f * DegToRad;
+	}
+	int mouseX, mouseY;
+	GetMousePoint(&mouseX, &mouseY); // マウスの位置が入る
+	int moveX = mouseX - prevMouseX; // マウス移動量
+	int moveY = mouseY - prevMouseY;
+	// カメラ回転操作
+	transform.rotation.y += moveX * 0.3f * DegToRad;
+	transform.rotation.x += moveY * 0.1f * DegToRad;
+	prevMouseX = mouseX;
+	prevMouseY = mouseY;
+
+	if (transform.rotation.x >= 85.0f * DegToRad) {
+		transform.rotation.x = 85.0f * DegToRad;
+	}
+	if (transform.rotation.x <= -45.0f * DegToRad) {
+		transform.rotation.x = -45.0f * DegToRad;
+	}
+
+	VECTOR3 camPos = lookPosition + VECTOR3(0,150,0)
+		+ VECTOR3(0,0,-427) * MGetRotX(transform.rotation.x)
+		* MGetRotY(transform.rotation.y);
+	VECTOR3 lookPos = lookPosition + VECTOR3(0, 200, 0);
+	SetCameraPositionAndTarget_UpVecY(camPos, lookPos);
 }
 
 void Camera::Draw()
