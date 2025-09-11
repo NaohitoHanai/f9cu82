@@ -8,6 +8,8 @@ public:
 	void Draw() override;
 	void PostDraw();
 	int HitModel() { return hHitModel; }
+	bool CollideLine(const VECTOR& pos1, const VECTOR& pos2, VECTOR* hit = nullptr) const;
+
 private:
 	int hHitModel;
 };

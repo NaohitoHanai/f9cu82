@@ -34,4 +34,6 @@ private:
 	};
 	Animator* animator;
 	Camera* camera;
+
+	int hSabel;
 };

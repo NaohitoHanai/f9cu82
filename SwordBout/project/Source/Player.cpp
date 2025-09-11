@@ -39,6 +39,9 @@ Player::Player(const VECTOR3& pos, float rot)
 	transform.rotation.y = rot;
 
 	camera = FindGameObject<Camera>();
+
+	hSabel = MV1LoadModel("data/model/Character/Weapon/Sabel/Sabel.mv1");
+	assert(hSabel > 0);
 }
 
 Player::~Player()
@@ -77,6 +80,7 @@ void Player::Update()
 	// 進みたいベクトルを求める（実際に進むベクトル）
 	//　　　カメラの回転は、camera->GetTransform().rotationで手に入る
 	if (inputVec.Size() > 0) {
+		animator->Play(A_RUN);
 		moveVec = inputVec * MGetRotY(camera->GetTransform().rotation.y);
 		VECTOR3 front = VECTOR3(0, 0, 1) * MGetRotY(transform.rotation.y);
 		VECTOR3 right = VECTOR3(1, 0, 0) * MGetRotY(transform.rotation.y);
@@ -84,15 +88,22 @@ void Player::Update()
 		if (moveCos >= cosf(30.0f * DegToRad)) { // 正面付近
 			transform.position += moveVec * 5.0f;
 			transform.rotation.y = atan2f(moveVec.x, moveVec.z);
-		} else if (右ベクトルとの内積が>=0) {
+		} else if (VDot(moveVec, right)>=0) {
 			transform.rotation.y += 30.0f * DegToRad;
 		} else {
-			// 左回り
+			transform.rotation.y -= 30.0f * DegToRad;
 		}
+	} else {
+		animator->Play(A_NEUTRAL);
 	}
-
-	// 回転を合わせる（１フレームで60度回る）：角度が合わなければ進まない
-	// 角度があっていれば、その向きに進む
+	Stage* stage = FindGameObject<Stage>();
+	VECTOR hit; // 地面の座標が入る変数
+	VECTOR pos1 = transform.position + VGet(0, 100, 0);
+	VECTOR pos2 = transform.position + VGet(0, -100, 0);
+	if (stage->CollideLine(pos1, pos2, &hit))
+	{
+		transform.position = hit;
+	}
 
 	camera->SetPlayerPosition(transform.position);
 }
@@ -102,4 +113,12 @@ void Player::Draw()
 	Object3D::Draw(); // キャラの表示
 	DrawLine3D(transform.position + moveVec*100, transform.position,
 		GetColor(255,0,0));
+
+	MATRIX m = MV1GetFrameLocalWorldMatrix(hModel, 29);
+	MV1SetMatrix(hSabel, m);
+	MV1DrawModel(hSabel);
+
+	VECTOR s1 = VGet(0,0,0) * m;
+	VECTOR s2 = VGet(0,-100,0) * m;
+	DrawLine3D(s1, s2, GetColor(255,0,0));
 }

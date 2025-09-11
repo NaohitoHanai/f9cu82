@@ -30,6 +30,13 @@ Stage::~Stage()
 	}
 }
 
+bool Stage::CollideLine(const VECTOR& pos1, const VECTOR& pos2, VECTOR* hit) const
+{
+	VECTOR pos;
+	StageObject* obj = FindGameObject<StageObject>();
+	return obj->CollideLine(pos1, pos2, hit);
+}
+
 void Stage::ReadMappingData(std::string filename)
 {
 	const std::string folder = "data/model/Stage/";
