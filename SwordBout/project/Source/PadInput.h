@@ -25,4 +25,5 @@ private:
 	int pad_id;
 	XINPUT_STATE input;
 	unsigned char prevButtons[16]; // ‘O‚Ìƒ{ƒ^ƒ“
+	int prevMouseX, prevMouseY;
 };
