@@ -145,22 +145,6 @@ void PadInput::Update()
 
 
 #ifdef USE_KEYBOARD_MOVE
-    if (CheckHitKey(KEY_INPUT_W))
-    {
-        input.ThumbLY = -MAX;
-    }
-    if (CheckHitKey(KEY_INPUT_S))
-    {
-        input.ThumbLY = MAX;
-    }
-    if (CheckHitKey(KEY_INPUT_D))
-    {
-        input.ThumbLX = MAX;
-    }
-    if (CheckHitKey(KEY_INPUT_A))
-    {
-        input.ThumbLX = -MAX;
-    }
 #endif
 #ifdef USE_MOUSE_CAMERA
     static const int SENSE = 40;
