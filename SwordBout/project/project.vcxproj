@@ -160,6 +160,7 @@
     <ClInclude Include="Source\Golem.h" />
     <ClInclude Include="Source\Needle.h" />
     <ClInclude Include="Source\Object3D.h" />
+    <ClInclude Include="Source\PadInput.h" />
     <ClInclude Include="Source\Player.h" />
     <ClInclude Include="Source\RedGoblin.h" />
     <ClInclude Include="Source\Screen.h" />
@@ -194,6 +195,7 @@
     <ClCompile Include="Source\Golem.cpp" />
     <ClCompile Include="Source\Needle.cpp" />
     <ClCompile Include="Source\Object3D.cpp" />
+    <ClCompile Include="Source\PadInput.cpp" />
     <ClCompile Include="Source\Player.cpp" />
     <ClCompile Include="Source\PlayScene.cpp" />
     <ClCompile Include="Source\RedGoblin.cpp" />

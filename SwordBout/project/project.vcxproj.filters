@@ -89,6 +89,7 @@
     <ClCompile Include="Source\Camera.cpp">
       <Filter>2.PlayScene</Filter>
     </ClCompile>
+    <ClCompile Include="Source\PadInput.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Screen.h" />
@@ -195,6 +196,7 @@
     <ClInclude Include="Source\Camera.h">
       <Filter>2.PlayScene</Filter>
     </ClInclude>
+    <ClInclude Include="Source\PadInput.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Library">
