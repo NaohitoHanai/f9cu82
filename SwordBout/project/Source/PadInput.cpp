@@ -42,56 +42,53 @@ float StickValue(int stick) {
 
 float PadInput::LStickX()
 {
+    if (CheckHitKey(KEY_INPUT_D)) {
+        return 1.0f;
+    }
+    if (CheckHitKey(KEY_INPUT_A)) {
+        return -1.0f;
+    }
     return StickValue(input.ThumbLX);
 }
 
 float PadInput::LStickY()
 {
+    if (CheckHitKey(KEY_INPUT_W)) {
+        return 1.0f;
+    }
+    if (CheckHitKey(KEY_INPUT_S)) {
+        return -1.0f;
+    }
     return StickValue(input.ThumbLY);
 }
 
 float PadInput::RStickX()
 {
+    if (CheckHitKey(KEY_INPUT_RIGHT)) {
+        return 1.0f;
+    }
+
+    if (CheckHitKey(KEY_INPUT_LEFT)) {
+        return -1.0f;
+    }
     return StickValue(input.ThumbRX);
 }
 
 float PadInput::RStickY()
 {
-    return StickValue(input.ThumbRY);
-}
+    if (CheckHitKey(KEY_INPUT_UP)) {
+        return 1.0f;
+    }
 
-VECTOR2 StickVec(int x, int y)
-{
-    float size = sqrtf((float)x*x + (float)y*y);
-    if (size < LIMIT)
-    {
-        return VECTOR2(0, 0);
+    if (CheckHitKey(KEY_INPUT_DOWN)) {
+        return -1.0f;
     }
-    else if (size > MAX)
-    {
-        return VECTOR2(x / size, y / size);
-    }
-    else
-    {
-        return VECTOR2(x / (float)MAX, y / (float)MAX);
-    }
+    return StickValue(input.ThumbRY);
 }
 
 VECTOR2 PadInput::LStickVec()
 {
     VECTOR2 ret = VECTOR2(LStickX(), LStickY());
-    if (CheckHitKey(KEY_INPUT_W)) {
-        ret += VECTOR2(0, 1);
-    }
-    if (CheckHitKey(KEY_INPUT_S)) {
-        ret += VECTOR2(0, -1);
-    }
-    if (CheckHitKey(KEY_INPUT_D)) {
-        ret += VECTOR2(1, 0);
-    }
-    if (CheckHitKey(KEY_INPUT_A)) {
-        ret += VECTOR2(-1, 0);
-    }
     if (ret.Size() > 1.0f) {
         ret = ret.Normalize();
     }
@@ -100,7 +97,11 @@ VECTOR2 PadInput::LStickVec()
 
 VECTOR2 PadInput::RStickVec()
 {
-    return StickVec(input.ThumbRX, input.ThumbRY);
+    VECTOR2 ret = VECTOR2(RStickX(), RStickY());
+    if (ret.Size() > 1.0f) {
+        ret = ret.Normalize();
+    }
+    return ret;
 }
 
 bool PadInput::Press(int id)
@@ -141,11 +142,9 @@ void PadInput::Update()
         prevButtons[i] = input.Buttons[i];
     }
     GetJoypadXInputState(pad_id, &input);
-
-
-
-#ifdef USE_KEYBOARD_MOVE
-#endif
+    if (CheckHitKey(KEY_INPUT_M)) {
+        input.Buttons[XINPUT_BUTTON_A] = 1;
+    }
 #ifdef USE_MOUSE_CAMERA
     static const int SENSE = 40;
     int mouseX, mouseY;
@@ -157,8 +156,4 @@ void PadInput::Update()
     prevMouseX = mouseX;
     prevMouseY = mouseY;
 #endif
-    if (GetMouseInput() & MOUSE_INPUT_LEFT)
-    {
-        input.Buttons[XINPUT_BUTTON_X] = 1;
-    }
 }

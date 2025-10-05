@@ -8,6 +8,7 @@ public:
 	Goblin(const VECTOR& pos, float rot);
 	~Goblin();
 	void Update() override;
+	void CheckAttack(VECTOR3 p1, VECTOR3 p2);
 private:
 	enum AnimID {
 		A_NEUTRAL = 0,

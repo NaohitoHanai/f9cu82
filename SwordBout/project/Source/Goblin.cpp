@@ -9,6 +9,7 @@ Goblin::Goblin(const VECTOR& pos, float rot)
 	const std::string folder = "data/model/Character/Goblin/";
 	hModel = MV1LoadModel((folder + "Goblin.mv1").c_str());
 	assert(hModel > 0);
+	MV1SetupCollInfo(hModel);
 
 	int root = MV1SearchFrame(hModel, "root");
 	MV1SetFrameUserLocalMatrix(hModel, root, MGetRotY(DX_PI_F));
@@ -47,4 +48,13 @@ Goblin::~Goblin()
 void Goblin::Update()
 {
 	animator->Update();
+}
+
+void Goblin::CheckAttack(VECTOR3 p1, VECTOR3 p2)
+{
+	MV1RefreshCollInfo(hModel);
+	MV1_COLL_RESULT_POLY ret = MV1CollCheck_Line(hModel, -1, p1, p2);
+	if (ret.HitFlag > 0) {
+		animator->Play(A_DAMAGE);
+	}
 }

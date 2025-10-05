@@ -47,4 +47,9 @@ private:
 	State state; // ó‘Ô‚ğ‚Â•Ï”
 	void UpdateNormal();
 	void UpdateAttack1();
+	void UpdateAttack2();
+
+	bool attackNext;
+	VECTOR sabelBtm;
+	VECTOR sabelTop;
 };

@@ -8,7 +8,6 @@ namespace {
 
 Camera::Camera()
 {
-	GetMousePoint(&prevMouseX, &prevMouseY);
 }
 
 Camera::~Camera()
@@ -18,31 +17,9 @@ Camera::~Camera()
 void Camera::Update()
 {
 	PadInput* pad = FindGameObject<PadInput>();
-	float padX = pad->LStickX();
+	float padX = pad->RStickX();
 	transform.rotation.y += padX * 3.0f * DegToRad;
-
-	if (CheckHitKey(KEY_INPUT_RIGHT)) { //→キー
-		transform.rotation.y += 3.0f * DegToRad;
-	}
-	if (CheckHitKey(KEY_INPUT_LEFT)) { //→キー
-		transform.rotation.y -= 3.0f * DegToRad;
-	}
-	if (CheckHitKey(KEY_INPUT_UP)) { //→キー
-		transform.rotation.x += 2.0f * DegToRad;
-	}
-	if (CheckHitKey(KEY_INPUT_DOWN)) { //→キー
-		transform.rotation.x -= 2.0f * DegToRad;
-	}
-	int mouseX, mouseY;
-	GetMousePoint(&mouseX, &mouseY); // マウスの位置が入る
-	int moveX = mouseX - prevMouseX; // マウス移動量
-	int moveY = mouseY - prevMouseY;
-	// カメラ回転操作
-	transform.rotation.y += moveX * 0.3f * DegToRad;
-	transform.rotation.x += moveY * 0.1f * DegToRad;
-	prevMouseX = mouseX;
-	prevMouseY = mouseY;
-
+	transform.rotation.x += pad->RStickY() * 3.0f * DegToRad;
 	if (transform.rotation.x >= 85.0f * DegToRad) {
 		transform.rotation.x = 85.0f * DegToRad;
 	}

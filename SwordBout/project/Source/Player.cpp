@@ -3,6 +3,7 @@
 #include "Stage.h"
 #include "Camera.h"
 #include "PadInput.h"
+#include "Goblin.h"
 
 Player::Player() : Player(VGet(0,0,0), 0.0f){}
 
@@ -71,6 +72,9 @@ void Player::Update()
 	case ST_ATTACK1:
 		UpdateAttack1();
 		break;
+	case ST_ATTACK2:
+		UpdateAttack2();
+		break;
 	}
 
 	Stage* stage = FindGameObject<Stage>();
@@ -94,9 +98,9 @@ void Player::Draw()
 	MV1SetMatrix(hSabel, m);
 	MV1DrawModel(hSabel);
 
-	VECTOR s1 = VGet(0,0,0) * m;
-	VECTOR s2 = VGet(0,-100,0) * m;
-	DrawLine3D(s1, s2, GetColor(255,0,0));
+	sabelBtm = VGet(0,0,0) * m;
+	sabelTop = VGet(0,-100,0) * m;
+	DrawLine3D(sabelBtm, sabelTop, GetColor(255,0,0));
 }
 
 void Player::UpdateNormal()
@@ -129,11 +133,35 @@ void Player::UpdateNormal()
 	if (pad->OnPush(XINPUT_BUTTON_A)) // 攻撃
 	{
 		animator->Play(A_ATTACK1);
+		attackNext = false;
 		state = ST_ATTACK1; //状態を変える
 	}
 }
 
 void Player::UpdateAttack1()
+{
+	if (animator->GetCurrentFrame() >= 8.5f) {
+		if (attackNext) {
+			animator->Play(A_ATTACK2);
+			attackNext = false;
+			state = ST_ATTACK2;
+		}
+	} else {
+		Goblin* gob = FindGameObject<Goblin>();
+		gob->CheckAttack(sabelBtm, sabelTop);
+
+		PadInput* pad = FindGameObject<PadInput>();
+		if (pad->OnPush(XINPUT_BUTTON_A))
+		{
+			attackNext = true;
+		}
+	}
+	if (animator->IsFinish()) { // 攻撃アニメーションが終わった
+		state = ST_NORMAL; //状態を変える
+	}
+}
+
+void Player::UpdateAttack2()
 {
 	if (animator->IsFinish()) { // 攻撃アニメーションが終わった
 		state = ST_NORMAL; //状態を変える
