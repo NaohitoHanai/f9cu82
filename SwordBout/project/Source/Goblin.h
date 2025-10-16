@@ -41,4 +41,5 @@ private:
 		float range;
 	};
 	CircleRange territory;
+	float MoveTo(VECTOR3 target, float speed);
 };

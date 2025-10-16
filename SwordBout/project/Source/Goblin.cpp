@@ -114,28 +114,19 @@ void Goblin::UpdateChase()
 {
 	// プレイヤーに向かって走る
 	//　キャラの向いてる方に走る
-	VECTOR3 velocity = VECTOR3(0,0,6) * MGetRotY(transform.rotation.y);
-	transform.position += velocity;
 	Player* pl = FindGameObject<Player>();
-	VECTOR3 plPos = pl->GetTransform().position; // プレイヤーの座標
-	VECTOR3 right = VECTOR3(1,0,0)* MGetRotY(transform.rotation.y);
-	VECTOR3 toPlayer = plPos - transform.position;
-	float ip = VDot(right, toPlayer);
-	if (ip >= 0)
-		transform.rotation.y += DegToRad;
-	else
-		transform.rotation.y -= DegToRad;
+	float d = MoveTo(pl->GetTransform().position, 6);
 
 	// 近づいたらATTACKへ
-	if (toPlayer.Size() < 100.0f) {
+	if (d < 100.0f) {
 		animator->Play(A_ATTACK1);
 		state = ST_ATTACK;
 	}
 	// テリトリーを出たらWAITにする
 	VECTOR3 v = transform.position - territory.center;
 	if (v.Size() >= territory.range) {
-		animator->Play(A_NEUTRAL);
-		state = ST_WAIT;
+		animator->Play(A_WALK);
+		state = ST_BACK;
 	}
 }
 
@@ -150,6 +141,12 @@ void Goblin::UpdateAttack()
 
 void Goblin::UpdateBack()
 {
+	float d = MoveTo(territory.center, 2);
+	if (d < 100.0f) {
+		animator->Play(A_NEUTRAL);
+		state = ST_WAIT;
+	}
+
 }
 
 void Goblin::UpdateDamage()
@@ -159,4 +156,18 @@ void Goblin::UpdateDamage()
 		animator->Play(A_NEUTRAL);
 		state = ST_WAIT;
 	}
+}
+
+float Goblin::MoveTo(VECTOR3 target, float speed)
+{
+	VECTOR3 velocity = VECTOR3(0, 0, speed) * MGetRotY(transform.rotation.y);
+	transform.position += velocity;
+	VECTOR3 right = VECTOR3(1, 0, 0) * MGetRotY(transform.rotation.y);
+	VECTOR3 toTarget = target - transform.position;
+	float ip = VDot(right, toTarget);
+	if (ip >= 0)
+		transform.rotation.y += DegToRad;
+	else
+		transform.rotation.y -= DegToRad;
+	return toTarget.Size();
 }
