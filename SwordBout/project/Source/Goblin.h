@@ -22,4 +22,15 @@ private:
 		A_DOWN,
 	};
 	Animator* animator;
+	enum State {
+		ST_WAIT = 0, // ‘Ò‹@
+		ST_CHASE,
+		ST_ATTACK,
+		ST_DAMAGE,
+	};
+	State state;
+	void UpdateWait();
+	void UpdateChase();
+	void UpdateAttack();
+	void UpdateDamage();
 };

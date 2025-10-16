@@ -48,6 +48,7 @@ private:
 	void UpdateNormal();
 	void UpdateAttack1();
 	void UpdateAttack2();
+	void UpdateAttack3();
 
 	bool attackNext;
 	VECTOR sabelBtm;

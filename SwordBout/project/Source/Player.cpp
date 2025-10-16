@@ -75,6 +75,9 @@ void Player::Update()
 	case ST_ATTACK2:
 		UpdateAttack2();
 		break;
+	case ST_ATTACK3:
+		UpdateAttack3();
+		break;
 	}
 
 	Stage* stage = FindGameObject<Stage>();
@@ -162,6 +165,29 @@ void Player::UpdateAttack1()
 }
 
 void Player::UpdateAttack2()
+{
+	if (animator->GetCurrentFrame() >= 9.5f) {
+		if (attackNext) {
+			animator->Play(A_ATTACK3);
+			attackNext = false;
+			state = ST_ATTACK3;
+		}
+	} else {
+		Goblin* gob = FindGameObject<Goblin>();
+		gob->CheckAttack(sabelBtm, sabelTop);
+
+		PadInput* pad = FindGameObject<PadInput>();
+		if (pad->OnPush(XINPUT_BUTTON_A))
+		{
+			attackNext = true;
+		}
+	}
+	if (animator->IsFinish()) { // 攻撃アニメーションが終わった
+		state = ST_NORMAL; //状態を変える
+	}
+}
+
+void Player::UpdateAttack3()
 {
 	if (animator->IsFinish()) { // 攻撃アニメーションが終わった
 		state = ST_NORMAL; //状態を変える
