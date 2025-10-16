@@ -31,6 +31,8 @@ Goblin::Goblin(const VECTOR& pos, float rot)
 
 	transform.position = pos;
 	transform.rotation.y = rot;
+	territory.center = pos;
+	territory.range = 2000.0f;
 
 	state = ST_WAIT;
 }
@@ -61,6 +63,9 @@ void Goblin::Update()
 		break;
 	case ST_ATTACK:
 		UpdateAttack();
+		break;
+	case ST_BACK:
+		UpdateBack();
 		break;
 	case ST_DAMAGE:
 		UpdateDamage();
@@ -122,11 +127,29 @@ void Goblin::UpdateChase()
 		transform.rotation.y -= DegToRad;
 
 	// 近づいたらATTACKへ
+	if (toPlayer.Size() < 100.0f) {
+		animator->Play(A_ATTACK1);
+		state = ST_ATTACK;
+	}
+	// テリトリーを出たらWAITにする
+	VECTOR3 v = transform.position - territory.center;
+	if (v.Size() >= territory.range) {
+		animator->Play(A_NEUTRAL);
+		state = ST_WAIT;
+	}
 }
 
 void Goblin::UpdateAttack()
 {
 	// 攻撃アニメーションが終わったらWAIT
+	if (animator->IsFinish()) {
+		animator->Play(A_NEUTRAL);
+		state = ST_WAIT;
+	}
+}
+
+void Goblin::UpdateBack()
+{
 }
 
 void Goblin::UpdateDamage()
@@ -134,6 +157,6 @@ void Goblin::UpdateDamage()
 	if (animator->IsFinish())
 	{
 		animator->Play(A_NEUTRAL);
-		state = ST_DAMAGE;
+		state = ST_WAIT;
 	}
 }
