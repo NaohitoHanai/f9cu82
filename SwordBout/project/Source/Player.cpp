@@ -3,7 +3,7 @@
 #include "Stage.h"
 #include "Camera.h"
 #include "PadInput.h"
-#include "Goblin.h"
+#include "Enemy.h"
 
 Player::Player() : Player(VGet(0,0,0), 0.0f){}
 
@@ -150,8 +150,10 @@ void Player::UpdateAttack1()
 			state = ST_ATTACK2;
 		}
 	} else {
-		Goblin* gob = FindGameObject<Goblin>();
-		gob->CheckAttack(sabelBtm, sabelTop);
+		std::list<Enemy*> gobs = FindGameObjects<Enemy>();
+		for (Enemy* gob : gobs) {
+			gob->CheckAttack(sabelBtm, sabelTop);
+		}
 
 		PadInput* pad = FindGameObject<PadInput>();
 		if (pad->OnPush(XINPUT_BUTTON_A))
@@ -173,7 +175,7 @@ void Player::UpdateAttack2()
 			state = ST_ATTACK3;
 		}
 	} else {
-		Goblin* gob = FindGameObject<Goblin>();
+		Enemy* gob = FindGameObject<Enemy>();
 		gob->CheckAttack(sabelBtm, sabelTop);
 
 		PadInput* pad = FindGameObject<PadInput>();
@@ -191,5 +193,8 @@ void Player::UpdateAttack3()
 {
 	if (animator->IsFinish()) { // 攻撃アニメーションが終わった
 		state = ST_NORMAL; //状態を変える
+	} else {
+		Enemy* gob = FindGameObject<Enemy>();
+		gob->CheckAttack(sabelBtm, sabelTop);
 	}
 }

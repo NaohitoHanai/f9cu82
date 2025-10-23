@@ -201,6 +201,9 @@
     <ClInclude Include="Source\PadInput.h">
       <Filter>9.Common</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Enemy.h">
+      <Filter>2.PlayScene\Enemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Library">

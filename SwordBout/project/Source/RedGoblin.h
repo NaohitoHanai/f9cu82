@@ -1,13 +1,14 @@
 #pragma once
-#include "Object3D.h"
+#include "Enemy.h"
 #include "Animator.h"
 
-class RedGoblin : public Object3D {
+class RedGoblin : public Enemy {
 public:
 	RedGoblin();
 	RedGoblin(const VECTOR& pos, float rot);
 	~RedGoblin();
 	void Update() override;
+	void CheckAttack(VECTOR3 p1, VECTOR3 p2) override;
 private:
 	enum AnimID {
 		A_NEUTRAL = 0,
@@ -21,4 +22,11 @@ private:
 		A_DOWN,
 	};
 	Animator* animator;
+	enum State {
+		ST_WAIT = 0,
+		ST_DAMAGE,
+	};
+	State state;
+	void UpdateWait();
+	void UpdateDamage();
 };

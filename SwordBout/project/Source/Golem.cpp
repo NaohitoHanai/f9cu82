@@ -9,6 +9,7 @@ Golem::Golem(const VECTOR& pos, float rot)
 	const std::string folder = "data/model/Character/Golem/";
 	hModel = MV1LoadModel((folder + "Golem.mv1").c_str());
 	assert(hModel > 0);
+	MV1SetupCollInfo(hModel);
 
 	animator = new Animator(hModel);
 	assert(animator != nullptr);
