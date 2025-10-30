@@ -1,7 +1,17 @@
 #include "TitleScene.h"
+#include <fstream>
 
 TitleScene::TitleScene()
 {
+	int a = 2000;
+	std::ofstream ofs("save.dat", std::ios::binary);
+	ofs.write((char*)&a, sizeof(a));
+	ofs.close();
+	int b = 0;
+	std::ifstream ifs("save.dat", std::ios::binary);
+	ifs.read((char*)&b, sizeof(b));
+	ifs.close();
+
 }
 
 TitleScene::~TitleScene()

@@ -55,17 +55,54 @@ void Stage::ReadMappingData(std::string filename)
 		int killCharaNum;
 		int killTargetChara;
 	};
-	struct CharaInfo {
-		int id;
-		VECTOR position;
-		float angle;
-	};
-	struct ObjectInfo {
-		int id;
-		VECTOR position;
-		VECTOR rotation;
-		VECTOR scale;
-	};
+	Header header;
+	ifs.read((char*)&header, sizeof(header));
+	new Player(header.PlayerPosition, header.PlayerAngle);
+
+	// 8体(header.CharaInfoNum)の敵キャラを読む
+	for (int i = 0; i < header.CharaInfoNum; i++) {
+		struct CharaInfo {
+			int id;
+			VECTOR position;
+			float angle;
+		};
+		CharaInfo chara;
+		ifs.read((char*)&chara, sizeof(chara));
+		switch (chara.id) {
+		case 1:
+			new Goblin(chara.position, chara.angle);
+			break;
+		case 2:
+			new Bee(chara.position, chara.angle);
+			break;
+		case 3:
+			new Golem(chara.position, chara.angle);
+			break;
+		case 4:
+			new RedGoblin(chara.position, chara.angle);
+			break;
+		}
+//		id 1:Goblin
+//		   2:Bee
+//		   3:Golem
+//		   4:RedGoblin
+	}
+	// 167個(header.ObjectInfoNum)のオブジェクトを読む
+	for (int i = 0; i < header.ObjectInfoNum; i++) {
+		struct ObjectInfo {
+			int id;
+			VECTOR position;
+			VECTOR rotation;
+			VECTOR scale;
+		};
+		ObjectInfo object;
+		ifs.read((char*)&object, sizeof(object));
+		char s[256];
+		sprintf_s<256>(s, "Stage_Obj%03d", object.id);
+		new StageObject(s, object.position,
+			object.rotation, object.scale);
+	}
+
 	struct EventInfo {
 		int type;
 		VECTOR position;
@@ -75,7 +112,7 @@ void Stage::ReadMappingData(std::string filename)
 		int object[8];
 	};
 	ifs.close();
-	new Goblin(VECTOR3(0, 350, 1500), DX_PI);
-	new Goblin(VECTOR3(50, 350, 1500), DX_PI);
-	new RedGoblin(VECTOR3(300, 150, 500), 0);
+//	new Goblin(VECTOR3(0, 350, 1500), DX_PI);
+//	new Goblin(VECTOR3(50, 350, 1500), DX_PI);
+//	new RedGoblin(VECTOR3(300, 150, 500), 0);
 }
