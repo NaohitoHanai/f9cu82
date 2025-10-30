@@ -12,6 +12,8 @@ Goblin::Goblin(const VECTOR& pos, float rot)
 	assert(hModel > 0);
 	MV1SetupCollInfo(hModel);
 
+	hAxe = MV1LoadModel("data/model/Character/Weapon/Axe/Axe.mv1");
+
 	int root = MV1SearchFrame(hModel, "root");
 	MV1SetFrameUserLocalMatrix(hModel, root, MGetRotY(DX_PI_F));
 
@@ -81,6 +83,21 @@ void Goblin::Update()
 	}
 }
 
+void Goblin::Draw()
+{
+	Object3D::Draw();
+
+	MATRIX m = MV1GetFrameLocalWorldMatrix(hModel, 20);
+	MV1SetMatrix(hAxe, m);
+	MV1DrawModel(hAxe);
+	// •€‚ðŽ‚½‚¹‚é@data\model\Character\Weapon\Axe\Axe.mv1
+	// Ž‚½‚¹‚éŽè‚Í@‚Q‚O”Ô hansocketR
+
+	axeBtm = VGet(0, -100, 0) * m;
+	axeTop = VGet(0, 80, 0) * m;
+	DrawLine3D(axeBtm, axeTop, GetColor(255, 0, 0));
+}
+
 void Goblin::CheckAttack(VECTOR3 p1, VECTOR3 p2)
 {
 	MV1RefreshCollInfo(hModel);
@@ -136,6 +153,23 @@ void Goblin::UpdateAttack()
 	if (animator->IsFinish()) {
 		animator->Play(A_NEUTRAL);
 		state = ST_WAIT;
+	}
+	float frame = animator->GetCurrentFrame();
+	if (frame < 20.0f) {
+		//Player‚Ì•û‚ðŒü‚­
+		Player* pl = FindGameObject<Player>();
+		VECTOR3 toPl = pl->GetTransform().position - transform.position;
+//		transform.rotation.y = atan2(toPl.x, toPl.z);
+		VECTOR3 right = VECTOR3(1,0,0) * transform.GetRotationMatrix();
+		if (VDot(right, toPl) > 0) {
+			transform.rotation.y += 2.0f * DegToRad;
+		} else {
+			transform.rotation.y -= 2.0f * DegToRad;
+		}
+	}
+	if (frame >= 24.5 && frame <= 27.5) {
+		Player* pl = FindGameObject<Player>();
+		pl->CheckAttack(axeBtm, axeTop);
 	}
 }
 

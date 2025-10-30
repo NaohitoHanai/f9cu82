@@ -8,8 +8,11 @@ public:
 	Goblin(const VECTOR& pos, float rot);
 	~Goblin();
 	void Update() override;
+	void Draw() override;
 	void CheckAttack(VECTOR3 p1, VECTOR3 p2) override;
 private:
+	int hAxe;
+	VECTOR3 axeTop, axeBtm;
 	enum AnimID {
 		A_NEUTRAL = 0,
 		A_WALK,
