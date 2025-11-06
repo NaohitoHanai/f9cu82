@@ -1,0 +1,8 @@
+0.5,Sound,Player/equip_00
+3.5,Sound,Weapon/Sabel/swish_S_00
+4,AttackStart,
+5,Sound,Player/MAT_footstep_grass_00
+5.5,Sound,Player/VO_J_attack_00
+7,AttackEnd,
+8.5,AnimCancel,
+28,Sound,Player/MAT_footstep_grass_00

@@ -4,6 +4,7 @@
 #include "Camera.h"
 #include "PadInput.h"
 #include "Enemy.h"
+#include "CsvReader.h"
 
 Player::Player() : Player(VGet(0,0,0), 0.0f){}
 
@@ -147,6 +148,8 @@ void Player::UpdateNormal()
 	if (pad->OnPush(XINPUT_BUTTON_A)) // 攻撃
 	{
 		animator->Play(A_ATTACK1);
+		attackEnable = false;
+		LoadParam("data/model/Character/Player/Anim_Attack1.csv");
 		attackNext = false;
 		state = ST_ATTACK1; //状態を変える
 	}
@@ -154,6 +157,23 @@ void Player::UpdateNormal()
 
 void Player::UpdateAttack1()
 {
+	float frame = animator->GetCurrentFrame();
+	for (AnimParam p : animParam) {
+		if (frame >= p.time - 0.5f && frame <= p.time) {
+			std::string com = p.com;
+			if (com == "Sound") {
+				std::string f = "data/sound/SE/";
+				PlaySound((f + p.file + ".wav").c_str(),
+					DX_PLAYTYPE_BACK);
+			}
+			if (com == "AttackStart") {
+				attackEnable = true;
+			}
+			if (com == "AttackEnd") {
+				attackEnable = false;
+			}
+		}
+	}
 	if (animator->GetCurrentFrame() >= 8.5f) {
 		if (attackNext) {
 			animator->Play(A_ATTACK2);
@@ -161,11 +181,12 @@ void Player::UpdateAttack1()
 			state = ST_ATTACK2;
 		}
 	} else {
-		std::list<Enemy*> gobs = FindGameObjects<Enemy>();
-		for (Enemy* gob : gobs) {
-			gob->CheckAttack(sabelBtm, sabelTop);
+		if (attackEnable) {
+			std::list<Enemy*> gobs = FindGameObjects<Enemy>();
+			for (Enemy* gob : gobs) {
+				gob->CheckAttack(sabelBtm, sabelTop);
+			}
 		}
-
 		PadInput* pad = FindGameObject<PadInput>();
 		if (pad->OnPush(XINPUT_BUTTON_A))
 		{
@@ -215,4 +236,18 @@ void Player::UpdateDamage()
 	if (animator->IsFinish()) { // アニメーションが終わった
 		state = ST_NORMAL; //状態を変える
 	}
+}
+
+void Player::LoadParam(std::string filename)
+{
+	animParam.clear();
+	CsvReader* csv = new CsvReader(filename);
+	for (int i = 0; i < csv->GetLines(); i++) {
+		AnimParam p;
+		p.time = csv->GetFloat(i, 0);
+		p.com = csv->GetString(i, 1);
+		p.file = csv->GetString(i, 2);
+		animParam.push_back(p);
+	}
+	delete csv;
 }

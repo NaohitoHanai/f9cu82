@@ -93,6 +93,9 @@
       <Filter>9.Common</Filter>
     </ClCompile>
     <ClCompile Include="Source\EnemyManager.cpp" />
+    <ClCompile Include="Source\csvReader.cpp">
+      <Filter>9.Common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Screen.h" />
@@ -207,6 +210,9 @@
     </ClInclude>
     <ClInclude Include="Source\EnemyManager.h">
       <Filter>2.PlayScene\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CsvReader.h">
+      <Filter>9.Common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

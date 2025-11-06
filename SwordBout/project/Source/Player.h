@@ -56,4 +56,13 @@ private:
 	bool attackNext;
 	VECTOR sabelBtm;
 	VECTOR sabelTop;
-};
+
+	struct AnimParam {
+		float time;
+		std::string com;
+		std::string file;
+	};
+	std::list<AnimParam> animParam;
+	void LoadParam(std::string filename);
+	bool attackEnable;
+};	

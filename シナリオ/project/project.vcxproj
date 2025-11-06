@@ -152,29 +152,11 @@
     <ClInclude Include="Library\SceneBase.h" />
     <ClInclude Include="Library\SceneManager.h" />
     <ClInclude Include="Library\Time.h" />
-    <ClInclude Include="Source\Animator.h" />
-    <ClInclude Include="Source\Bee.h" />
     <ClInclude Include="Source\BootScene.h" />
-    <ClInclude Include="Source\Camera.h" />
-    <ClInclude Include="Source\CsvReader.h" />
-    <ClInclude Include="Source\Enemy.h" />
-    <ClInclude Include="Source\EnemyManager.h" />
-    <ClInclude Include="Source\Goblin.h" />
-    <ClInclude Include="Source\Golem.h" />
-    <ClInclude Include="Source\Needle.h" />
-    <ClInclude Include="Source\Object3D.h" />
-    <ClInclude Include="Source\PadInput.h" />
-    <ClInclude Include="Source\Player.h" />
-    <ClInclude Include="Source\RedGoblin.h" />
     <ClInclude Include="Source\Screen.h" />
     <ClInclude Include="Source\PlayScene.h" />
     <ClInclude Include="Source\SceneFactory.h" />
-    <ClInclude Include="Source\Sky.h" />
-    <ClInclude Include="Source\Stage.h" />
-    <ClInclude Include="Source\StageObject.h" />
-    <ClInclude Include="Source\StateBase.h" />
     <ClInclude Include="Source\TitleScene.h" />
-    <ClInclude Include="Source\Transform.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ImGui\imgui.cpp" />
@@ -190,26 +172,10 @@
     <ClCompile Include="Library\ObjectManager.cpp" />
     <ClCompile Include="Library\SceneManager.cpp" />
     <ClCompile Include="Library\Time.cpp" />
-    <ClCompile Include="Source\Animator.cpp" />
-    <ClCompile Include="Source\Bee.cpp" />
     <ClCompile Include="Source\BootScene.cpp" />
-    <ClCompile Include="Source\Camera.cpp" />
-    <ClCompile Include="Source\csvReader.cpp" />
-    <ClCompile Include="Source\EnemyManager.cpp" />
-    <ClCompile Include="Source\Goblin.cpp" />
-    <ClCompile Include="Source\Golem.cpp" />
-    <ClCompile Include="Source\Needle.cpp" />
-    <ClCompile Include="Source\Object3D.cpp" />
-    <ClCompile Include="Source\PadInput.cpp" />
-    <ClCompile Include="Source\Player.cpp" />
     <ClCompile Include="Source\PlayScene.cpp" />
-    <ClCompile Include="Source\RedGoblin.cpp" />
     <ClCompile Include="Source\SceneFactory.cpp" />
-    <ClCompile Include="Source\Sky.cpp" />
-    <ClCompile Include="Source\Stage.cpp" />
-    <ClCompile Include="Source\StageObject.cpp" />
     <ClCompile Include="Source\TitleScene.cpp" />
-    <ClCompile Include="Source\Transform.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
