@@ -20,6 +20,8 @@ Stage::Stage(int number)
 	if (number == 0) {
 		new Sky("Stage00_sky");
 	}
+	new Goblin(VECTOR3(0, 150, -1000), 0);
+	new Goblin(VECTOR3(100, 150, -1200), 0);
 }
 
 Stage::~Stage()

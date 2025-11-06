@@ -92,6 +92,7 @@
     <ClCompile Include="Source\PadInput.cpp">
       <Filter>9.Common</Filter>
     </ClCompile>
+    <ClCompile Include="Source\EnemyManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Screen.h" />
@@ -202,6 +203,9 @@
       <Filter>9.Common</Filter>
     </ClInclude>
     <ClInclude Include="Source\Enemy.h">
+      <Filter>2.PlayScene\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EnemyManager.h">
       <Filter>2.PlayScene\Enemy</Filter>
     </ClInclude>
   </ItemGroup>

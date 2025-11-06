@@ -3,9 +3,11 @@
 #include "Stage.h"
 #include "StageObject.h"
 #include "Camera.h"
+#include "EnemyManager.h"
 
 PlayScene::PlayScene()
 {
+	new EnemyManager();
 	new Camera();
 	new Stage(0);
 //	new Player(VECTOR3(0,50,0), 0);

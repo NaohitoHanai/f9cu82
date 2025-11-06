@@ -2,6 +2,7 @@
 #include <assert.h>
 #include "Stage.h"
 #include "Player.h"
+#include "EnemyManager.h"
 
 Goblin::Goblin() : Goblin(VGet(0,0,0), 0.0f) {}
 
@@ -132,12 +133,19 @@ void Goblin::UpdateChase()
 	// プレイヤーに向かって走る
 	//　キャラの向いてる方に走る
 	Player* pl = FindGameObject<Player>();
-	float d = MoveTo(pl->GetTransform().position, 6);
-
+	VECTOR3 diff 
+		= pl->GetTransform().position - transform.position;
+	float d = diff.Size();
+	if (d >= 100.0f) {
+		d = MoveTo(pl->GetTransform().position, 6);
+	}
 	// 近づいたらATTACKへ
 	if (d < 100.0f) {
-		animator->Play(A_ATTACK1);
-		state = ST_ATTACK;
+		EnemyManager* man = FindGameObject<EnemyManager>();
+		if (man->RequestAttack(this)) {
+			animator->Play(A_ATTACK1);
+			state = ST_ATTACK;
+		}
 	}
 	// テリトリーを出たらWAITにする
 	VECTOR3 v = transform.position - territory.center;
@@ -149,6 +157,10 @@ void Goblin::UpdateChase()
 
 void Goblin::UpdateAttack()
 {
+	if (animator->GetCurrentFrame() >= 20.0f) {
+		EnemyManager* man = FindGameObject<EnemyManager>();
+		man->CancelAttack(this);
+	}
 	// 攻撃アニメーションが終わったらWAIT
 	if (animator->IsFinish()) {
 		animator->Play(A_NEUTRAL);
