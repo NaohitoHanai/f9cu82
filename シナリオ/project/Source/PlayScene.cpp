@@ -1,7 +1,9 @@
 #include "PlayScene.h"
+#include "Scenario.h"
 
 PlayScene::PlayScene()
 {
+	new Scenario();
 }
 
 PlayScene::~PlayScene()

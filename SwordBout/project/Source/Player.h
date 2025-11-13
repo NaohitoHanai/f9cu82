@@ -65,4 +65,5 @@ private:
 	std::list<AnimParam> animParam;
 	void LoadParam(std::string filename);
 	bool attackEnable;
+	bool cancelEnable;
 };	

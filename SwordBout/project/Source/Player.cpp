@@ -149,6 +149,7 @@ void Player::UpdateNormal()
 	{
 		animator->Play(A_ATTACK1);
 		attackEnable = false;
+		cancelEnable = false;
 		LoadParam("data/model/Character/Player/Anim_Attack1.csv");
 		attackNext = false;
 		state = ST_ATTACK1; //ó‘Ô‚ð•Ï‚¦‚é
@@ -172,9 +173,12 @@ void Player::UpdateAttack1()
 			if (com == "AttackEnd") {
 				attackEnable = false;
 			}
+			if (com == "AnimCancel") {
+				cancelEnable = true;
+			}
 		}
 	}
-	if (animator->GetCurrentFrame() >= 8.5f) {
+	if (cancelEnable) {
 		if (attackNext) {
 			animator->Play(A_ATTACK2);
 			attackNext = false;
