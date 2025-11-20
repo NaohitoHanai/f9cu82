@@ -156,6 +156,8 @@
     <ClInclude Include="Source\BootScene.h" />
     <ClInclude Include="Source\Chara.h" />
     <ClInclude Include="Source\CsvReader.h" />
+    <ClInclude Include="Source\Fade.h" />
+    <ClInclude Include="Source\Message.h" />
     <ClInclude Include="Source\Scenario.h" />
     <ClInclude Include="Source\Screen.h" />
     <ClInclude Include="Source\PlayScene.h" />
@@ -180,6 +182,8 @@
     <ClCompile Include="Source\BootScene.cpp" />
     <ClCompile Include="Source\Chara.cpp" />
     <ClCompile Include="Source\csvReader.cpp" />
+    <ClCompile Include="Source\Fade.cpp" />
+    <ClCompile Include="Source\Message.cpp" />
     <ClCompile Include="Source\PlayScene.cpp" />
     <ClCompile Include="Source\Scenario.cpp" />
     <ClCompile Include="Source\SceneFactory.cpp" />

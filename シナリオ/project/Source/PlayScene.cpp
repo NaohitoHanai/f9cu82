@@ -1,8 +1,10 @@
 #include "PlayScene.h"
 #include "Scenario.h"
+#include "Fade.h"
 
 PlayScene::PlayScene()
 {
+	new Fade();
 	new Scenario();
 }
 

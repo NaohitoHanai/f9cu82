@@ -4,6 +4,7 @@
 #include "CsvReader.h"
 #include "BG.h"
 #include "Chara.h"
+#include "Message.h"
 
 class Scenario : public GameObject
 {
@@ -17,4 +18,5 @@ private:
 	int readLine; // ç°é¿çsíÜÇÃçs
 	BG* bg;
 	Chara* chara[2];
+	Message* message;
 };
