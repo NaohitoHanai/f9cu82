@@ -14,8 +14,8 @@ public:
 private:
 	float alpha; // •s“§–¾“x
 	unsigned int color;
-	float maxTime;
-	float nowTime;
 	float startAlpha;
 	float endAlpha;
+	float maxTime;
+	float nowTime;
 };

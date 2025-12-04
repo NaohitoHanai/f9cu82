@@ -30,7 +30,7 @@
 ,CHARA_MOVE,0,-800,0.5
 ,WAIT_CHARA,0,,
 ＞剛志,,,,
-おう。ダッシュだ。,,,,
+おう。ダッシュだ。▽,,,,
 ,CHARA_MOVE,1,-800,0.5
 ,WAIT_CHARA,1,,
 ,FADEOUT,,WHITE,0.2

@@ -48,6 +48,22 @@ void Scenario::Update()
 		if (fade->Finished() == false)
 			readLine--;
 	}
+	if (com == "CHARA_READ") {
+		int id = csv->GetInt(readLine, 2);
+		chara[id]->Set(csv->GetString(readLine, 3));
+	}
+	if (com == "CHARA_MOVE") {
+		int id = csv->GetInt(readLine, 2);
+		int x = csv->GetInt(readLine, 3);
+		float t = csv->GetFloat(readLine, 4);
+		chara[id]->Move(x, 0, t);
+	}
+	if (com == "WAIT_CHARA") {
+		int id = csv->GetInt(readLine, 2);
+		if (chara[id]->Finished() == false) {
+			readLine--;
+		}
+	}
 	if (readLine < csv->GetLines()-1)
 		readLine++;
 }
