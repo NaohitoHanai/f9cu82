@@ -53,6 +53,9 @@
     <ClCompile Include="Library\Input.cpp">
       <Filter>Library</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Board.cpp">
+      <Filter>PlayScene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Screen.h" />
@@ -119,6 +122,9 @@
     </ClInclude>
     <ClInclude Include="Library\Input.h">
       <Filter>Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Board.h">
+      <Filter>PlayScene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
