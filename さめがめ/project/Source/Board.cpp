@@ -100,5 +100,4 @@ void Board::Erase()
 				cells[y][x].color = No;
 		}
 	}
-
 }
