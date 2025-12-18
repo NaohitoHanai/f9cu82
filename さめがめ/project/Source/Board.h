@@ -24,6 +24,7 @@ private:
 	struct CellInfo {
 		int color;
 		bool erase;
+		float dy; // YÀ•W‚ğ‚¸‚ç‚·
 	};
 	std::vector<std::vector<CellInfo>> cells;
 
@@ -32,4 +33,6 @@ private:
 	void Clear();
 	int Check(int x, int y);
 	void Erase();
+	void Fall();
+	float fallSpeed;
 };

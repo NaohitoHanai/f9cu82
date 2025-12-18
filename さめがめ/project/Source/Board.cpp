@@ -11,6 +11,7 @@ Board::Board()
 			} else {
 				cells[y][x].color = rand() % (Wall-Red);
 			}
+			cells[y][x].dy = 0;
 		}
 	}
 
@@ -27,20 +28,38 @@ void Board::Update()
 	GetMousePoint(&x, &y);
 	select.x = x / 32;
 	select.y = y / 32;
+	static bool prev = true;
 	if (GetMouseInput() & MOUSE_INPUT_LEFT) {
-		if (select.y >= cells.size())
-			return;
-		if (select.x >= cells[select.y].size())
-			return;
-		if (cells[select.y][select.x].color == Wall)
-			return;
-		if (cells[select.y][select.x].color == No)
-			return;
-		Clear();
-		if (Check(select.x, select.y) > 1) {
-			Erase();
+		if (!prev) {
+			if (select.y >= cells.size())
+				return;
+			if (select.x >= cells[select.y].size())
+				return;
+			if (cells[select.y][select.x].color == Wall)
+				return;
+			if (cells[select.y][select.x].color == No)
+				return;
+			Clear();
+			if (Check(select.x, select.y) > 1) {
+				Erase();
+				Fall();
+			}
+		}
+		prev = true;
+	} else {
+		prev = false;
+	}
+
+	for (int y = 0; y < cells.size(); y++) {
+		for (int x = 0; x < cells[y].size(); x++) {
+			if (cells[y][x].dy < 0) {
+				cells[y][x].dy = 0;
+			}else if (cells[y][x].dy > 0) {
+				cells[y][x].dy -= fallSpeed;
+			}
 		}
 	}
+	fallSpeed += 2.2f;
 }
 
 void Board::Draw()
@@ -49,7 +68,8 @@ void Board::Draw()
 		for (int x = 0; x < cells[y].size(); x++) {
 			int c = cells[y][x].color;
 			if (c >= Red) {
-				DrawRectGraph(x * 32, y * 32, c*32, 0, 32, 32,
+				int dy = cells[y][x].dy;
+				DrawRectGraph(x * 32, y * 32 - dy, c*32, 0, 32, 32,
 					hImage, TRUE);
 				if (cells[y][x].erase) {
 					DrawString(x*32, y*32,"E",
@@ -100,4 +120,24 @@ void Board::Erase()
 				cells[y][x].color = No;
 		}
 	}
+}
+
+void Board::Fall()
+{
+	for (int x = 0; x < cells[0].size(); x++) {
+		int ysize = cells.size();
+		int fall = 0;
+		for (int y = ysize-1; y >= 1; y--) {
+			if (cells[y][x].color == Wall)
+				continue;
+			if (cells[y][x].color == No) {
+				fall++;
+			} else if (fall > 0){
+				cells[y + fall][x] = cells[y][x];
+				cells[y + fall][x].dy += fall * 32;
+				cells[y][x].color = No;
+			}
+		}
+	}
+	fallSpeed = 0.0f;
 }
