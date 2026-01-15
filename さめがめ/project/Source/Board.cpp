@@ -6,8 +6,10 @@ Board::Board()
 	for (int y = 0; y < cells.size(); y++) {
 		cells[y].resize(15);
 		for (int x = 0; x < cells[y].size(); x++) {
-			if (x == 0 || y == 0 || y == cells.size()-1 || x == cells[y].size()-1) {
+			if (x == 0 || y == 0 || y == cells.size() - 1 || x == cells[y].size() - 1) {
 				cells[y][x].color = Wall;
+			} else if (x == 3) {
+				cells[y][x].color = 0;
 			} else {
 				cells[y][x].color = rand() % (Wall-Red);
 			}
@@ -60,6 +62,54 @@ void Board::Update()
 		}
 	}
 	fallSpeed += 2.2f;
+	// 落ちるブロックがなければ(全部のcellsのdyが0）
+
+	//bool all0 = true;
+	//for (int y = 0; y < cells.size(); y++) {
+	//	for (int x = 0; x < cells[y].size(); x++) {
+	//		if (cells[y][x].dy != 0) {
+	//			all0 = false;
+	//		}
+	//	}
+	//}
+	//if (all0) {
+	if (IsAll0()) {
+		for (int x = 1; x < cells[0].size()-2; x++) {
+			// 一番下に何もなければ
+			if (cells[cells.size() - 2][x].color == No) {
+				// 右側の１列が１つ左に移動する
+				for (int y = 1; y < cells.size()-1; y++) {
+					cells[y][x] = cells[y][x+1];
+					cells[y][x+1].color = No;
+				}
+			}
+		}
+	}
+//	<<ビットを右に移動   >>ビットを左に移動
+	// 1101	<< 1 = 11010   1101<<2 = 110100  1101>>1 = 110
+	static const int U = (1 << 0);//1
+	static const int D = (1 << 1);//2
+	static const int L = (1 << 2);//4
+	static const int R = (1 << 3);//8
+
+	for (int y = 1; y < cells.size()-1; y++) {
+		for (int x = 1; x < cells[y].size()-1; x++) {
+			cells[y][x].connect = 0;
+			if (cells[y][x].color == cells[y][x + 1].color) {
+				cells[y][x].connect += R;
+			}
+			if (cells[y][x].color == cells[y][x - 1].color) {
+				cells[y][x].connect += L;
+			}
+			if (cells[y][x].color == cells[y+1][x].color) {
+				cells[y][x].connect += D;
+			}
+			if (cells[y][x].color == cells[y-1][x].color) {
+				cells[y][x].connect += U;
+			}
+		}
+	}
+	cells[3][4].connect = U+L;
 }
 
 void Board::Draw()
@@ -69,12 +119,10 @@ void Board::Draw()
 			int c = cells[y][x].color;
 			if (c >= Red) {
 				int dy = cells[y][x].dy;
-				DrawRectGraph(x * 32, y * 32 - dy, c*32, 0, 32, 32,
+				int con = cells[y][x].connect;
+				DrawRectGraph(x * 32, y * 32 - dy, 
+									c*32, con*32, 32, 32,
 					hImage, TRUE);
-				if (cells[y][x].erase) {
-					DrawString(x*32, y*32,"E",
-									GetColor(255,255,255));
-				}
 			}
 		}
 	}
@@ -140,4 +188,15 @@ void Board::Fall()
 		}
 	}
 	fallSpeed = 0.0f;
+}
+
+bool Board::IsAll0()
+{
+	for (int y = 0; y < cells.size(); y++) {
+		for (int x = 0; x < cells[y].size(); x++) {
+			if (cells[y][x].dy != 0)
+				return false;
+		}
+	}
+	return true;
 }

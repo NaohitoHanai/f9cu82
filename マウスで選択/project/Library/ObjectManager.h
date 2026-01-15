@@ -82,53 +82,6 @@ namespace ObjectManager
 		return out;
 	}
 
-	/// <summary>
-	/// クラス名とタグからオブジェクトを探す
-	/// </summary>
-	/// <typeparam name="C">クラス名</typeparam>
-	/// <param name="tag">タグ</param>
-	/// <returns>オブジェクトの実態（存在しなければnullptr）</returns>
-	template<class C> C* FindGameObjectWithTag(std::string tag)
-	{
-		const std::list<GameObject*> objs = ObjectManager::GetAllObject();
-
-		for (GameObject* node : objs)
-		{
-			C* obj = dynamic_cast<C*>(node);
-			if (obj != nullptr)
-			{
-				if (obj->IsTag(tag))
-					return obj;
-			}
-		}
-		return nullptr;
-	}
-
-	/// <summary>
-	/// クラス名とタグからオブジェクトをすべて探す
-	/// </summary>
-	/// <typeparam name="C">クラス名</typeparam>
-	/// <param name="tag">タグ</param>
-	/// <returns>オブジェクトの実態list</returns>
-	template<class C> std::list<C*> FindGameObjectsWithTag(std::string tag)
-	{
-		std::list<C*> out;
-		out.clear();
-
-		const std::list<GameObject*> objs = ObjectManager::GetAllObject();
-
-		for (GameObject* node : objs)
-		{
-			C* obj = dynamic_cast<C*>(node);
-			if (obj != nullptr)
-			{
-				if (obj->IsTag(tag))
-					out.emplace_back(obj);
-			}
-		}
-		return out;
-	}
-
 };
 
 /// <summary>

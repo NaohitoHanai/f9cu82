@@ -1,11 +1,13 @@
 #include "App.h"
 #include "SceneManager.h"
 #include "ObjectManager.h"
+#include "Input.h"
 #include "Time.h"
 #include <DxLib.h>
 
 void AppInit()
 {
+	Input::Init();
 	ObjectManager::Init();
 	SceneManager::Init();
 	Time::Init();
@@ -13,6 +15,7 @@ void AppInit()
 
 void AppUpdate()
 {
+	Input::Update();
 	SceneManager::Update();
 	ObjectManager::Update();
 }

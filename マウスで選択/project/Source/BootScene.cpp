@@ -1,5 +1,4 @@
 #include "BootScene.h"
-#include "../Library/SceneManager.h"
 
 BootScene::BootScene()
 {

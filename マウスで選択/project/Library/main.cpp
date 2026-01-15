@@ -20,7 +20,7 @@
 #include "../Source/Screen.h"
 #include "../ImGui/imgui_impl_dxlib.hpp"
 
-#define CoGVersion "4.5F"
+#define CoGVersion "4.61"
 
 const char* Version() {
 	return CoGVersion;
@@ -61,6 +61,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	io.Fonts->AddFontFromFileTTF(u8"c:\\Windows\\Fonts\\meiryo.ttc", 18.0f, nullptr, io.Fonts->GetGlyphRangesJapanese());	ImGui_ImplDXlib_Init();
 #endif
 	AppInit();
+
 #ifdef FIX_FRAME_RATE
 	float refreshTime;
 	float freq;

@@ -42,16 +42,15 @@ void Time::Refresh()
 		sum += timeBuf[i];
 		num++;
 	}
-	if (num>BUF_SIZE/2)
-		deltaTime = sum / num;
+	if (num>BUF_SIZE/2) {
+		float ave = sum / num;
+		if (dt >= ave*2)
+			deltaTime = ave*2;
+		else
+			deltaTime = dt;
+	}
 	else
 		deltaTime = dt;
-	//int frames = (int)((dt * 1.2f) * refreshRate);
-	//if (frames >= 2)
-	//{
-	//	frames = 2;
-	//}
-	//deltaTime = frames / refreshRate;
 }
 
 float Time::DeltaTime()

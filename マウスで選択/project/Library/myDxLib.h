@@ -60,6 +60,7 @@ namespace DxLib {
 	inline VECTOR& operator *=(VECTOR& v, const MATRIX& m1) { return v = VTransform(v, m1); }
 	inline VECTOR_D& operator *=(VECTOR_D& v, const MATRIX_D& m1) { return v = VTransformD(v, m1); }
 
+	inline VECTOR operator -(const VECTOR& v) { return v * -1.0f; }
 	// 定数
 	static const VECTOR VZero = { 0,0,0 };
 
@@ -74,23 +75,35 @@ namespace DxLib {
 		}
 
 		VECTOR3(const VECTOR3& v) {
-			x = v.x;
-			y = v.y;
-			z = v.z;
+			*this = v;
 		}
 
 		VECTOR3(const VECTOR& v) {
-			x = v.x;
-			y = v.y;
-			z = v.z;
+			*this = v;
 		}
 
 		VECTOR3 operator =(VECTOR v) {
-			x = v.x;
-			y = v.y;
-			z = v.z;
+			*this = v;
 			return *this;
 		}
+
+		// ベクトルの加算
+		const VECTOR3 operator +(const VECTOR3& v) { return VECTOR3(x + v.x, y + v.y, z + v.z); }
+		VECTOR3& operator +=(VECTOR3& v) { x += v.x; y += v.y; z += v.z; return *this; }
+
+		// ベクトルの減算
+		const VECTOR3 operator -(const VECTOR3& v) { return VECTOR3(x - v.x, y - v.y, z - v.z); }
+		VECTOR3& operator -=(VECTOR3& v) { x -= v.y; y -= v.y; z -= v.z; return *this; }
+
+		// ベクトルの拡大
+		const VECTOR3 operator *(float scale) { return VECTOR3(x * scale, y * scale, z * scale); }
+		VECTOR3& operator *=(float scale) { x *= scale; y *= scale; z *= scale; return *this; }
+
+		// ベクトルの縮小
+		const VECTOR3 operator /(float scale) { return VECTOR3(x / scale, y / scale, z / scale); }
+		VECTOR3& operator /=(float scale) { x /= scale; y /= scale; z /= scale; return *this; }
+
+		inline VECTOR3 operator -() { return VECTOR3(-x, -y, -z); }
 
 		// 長さを返す（VSize(VECTOR）と同じ）
 		const float Size() {
@@ -134,16 +147,6 @@ namespace DxLib {
 			y = _y;
 		}
 
-		// 長さを求める
-		const float Size() const {
-			return sqrtf(SquareSize());
-		}
-
-		// 長さの二乗を求める
-		const float SquareSize() const {
-			return x * x + y * y;
-		}
-
 		// ベクトルの加算
 		const VECTOR2 operator +(const VECTOR2& v) { return VECTOR2(x + v.x, y + v.y); }
 		VECTOR2& operator +=(VECTOR2& v) { x += v.x; y += v.y; return *this; }
@@ -160,6 +163,18 @@ namespace DxLib {
 		const VECTOR2 operator /(float scale) { return VECTOR2(x / scale, y / scale); }
 		VECTOR2& operator /=(float scale) { x /= scale; y /= scale; return *this; }
 
+		inline VECTOR2 operator -() { return VECTOR2(-x, -y); }
+
+		// 長さを求める
+		const float Size() const {
+			return sqrtf(SquareSize());
+		}
+
+		// 長さの二乗を求める
+		const float SquareSize() const {
+			return x * x + y * y;
+		}
+
 		// 長さを１にする
 		const VECTOR2 Normalize() {
 			float size = Size();
@@ -173,24 +188,13 @@ namespace DxLib {
 		const float Dot(VECTOR2 other) {
 			return x * other.x + y * other.y;
 		}
+
+		// 外積を求める（VCross(VECTOR, VECTOR)と同じ）
+		const float Cross(VECTOR2 other) {
+			return x * other.y + y * other.x;
+		}
+
 	};
-
-	// ベクトルの加算
-	inline const VECTOR2 operator +(const VECTOR2& v1, const VECTOR2& v2) { return VECTOR2(v1.x + v2.x, v1.y + v2.y); }
-	inline VECTOR2& operator +=(VECTOR2& v1, const VECTOR2& v2) { v1.x += v2.x; v1.y += v2.y; return v1; }
-
-	// ベクトルの減算
-	inline const VECTOR2 operator -(const VECTOR2& v1, const VECTOR2& v2) { return VECTOR2(v1.x - v2.x, v1.y - v2.y); }
-	inline VECTOR2& operator -=(VECTOR2& v1, const VECTOR2& v2) { v1.x -= v2.x; v1.y -= v2.y; return v1; }
-
-	// ベクトルの拡大
-	inline const VECTOR2 operator *(const VECTOR2& v, float scale) { return VECTOR2(v.x * scale, v.y * scale); }
-	inline VECTOR2& operator *=(VECTOR2& v, float scale) { v.x *= scale; v.y *= scale; return v; }
-
-	// ベクトルの縮小
-	inline const VECTOR2 operator /(const VECTOR2 v, float scale) { return VECTOR2(v.x / scale, v.y / scale); }
-	inline VECTOR2& operator /=(VECTOR2 v, float scale) { v.x /= scale; v.y /= scale; return v; }
-
 
 	// VECTORと同じ用に使う関数
 	inline float VSize(const VECTOR2& v) {
@@ -212,4 +216,23 @@ namespace DxLib {
 	inline float VDot(const VECTOR2& v1, const VECTOR2& v2) {
 		return v1.x * v2.x + v1.y * v2.y;
 	}
+
+	inline void DebugPrintf(const char* fmt, ...)
+	{
+		va_list va;
+		va_start(va, fmt);
+		char s[1024];
+		vsprintf_s<1024>(s, fmt, va);
+		va_end(va);
+		OutputDebugString(s);
+	}
+
+	static const unsigned int COL_BLACK = GetColor(255, 0, 0);
+	static const unsigned int COL_RED = GetColor(255, 0, 0);
+	static const unsigned int COL_GREEN = GetColor(0, 255, 0);
+	static const unsigned int COL_BLUE = GetColor(0, 0, 255);
+	static const unsigned int COL_YELLOW = GetColor(255, 255, 0);
+	static const unsigned int COL_CYAN = GetColor(0, 255, 255);
+	static const unsigned int COL_MAGENTA = GetColor(255, 0, 255);
+	static const unsigned int COL_WHITE = GetColor(255, 255, 255);
 };
