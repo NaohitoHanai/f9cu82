@@ -71,6 +71,24 @@ void PlayScene::Update()
 			DragPoint pos = *drags.begin();
 			drags.push_back(pos);
 			drag = false;
+
+		}
+	}
+	if (Input::IsKeyOnTrig(KEY_INPUT_C))
+	{
+		//‘S‚Ä‚Ì“_‚ªAdrag‚Ì“à‘¤‚É‚ ‚é‚©’²‚×‚é
+		for (auto& p : points) {
+			bool inside = false;
+			for (int i = 0; i < drags.size() - 1; i++) {
+				DragPoint d1 = drags[i];
+				DragPoint d2 = drags[i + 1];
+				VECTOR3 p1 = p.pos;
+				VECTOR3 p2 = VECTOR3(0, 0, 0);
+				if (CrossLine(p1, p2, VECTOR3(d1.x, d1.y, 0), VECTOR3(d2.x, d2.y, 0))) {
+					inside = !inside;
+				}
+			}
+			p.selected = inside;
 		}
 	}
 	if (Input::IsKeyOnTrig(KEY_INPUT_T)) {
